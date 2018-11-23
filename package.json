@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -Rf docs && react-scripts build && mv build docs && cp docs/index.html docs/404.html",
+    "build": "rm -Rf docs && react-scripts build && mv build docs && cp docs/index.html docs/404.html && git add . && git commit -m \"Updated docs\" && git push",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
