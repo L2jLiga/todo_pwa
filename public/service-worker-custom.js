@@ -1,4 +1,5 @@
-var CACHE_NAME = 'todo-pwa-cache-1';
+const SERVER_URL = 'https://www.jsonstore.io/c1e61fddba68a34eb79eeb97fc56d72df86092d86ad5def5dc25a7252e6cf382';
+const CACHE_NAME = 'todo-pwa-cache-1';
 
 self.addEventListener('install', function (event) {
     // Perform install steps
@@ -51,5 +52,42 @@ self.addEventListener('fetch', function(event) {
                     }
                 );
             })
+    );
+});
+
+// background sync
+self.addEventListener('sync', function (event) {
+    if (event.tag === 'sync') {
+        event.waitUntil(
+            localforage.getItem('todos').then(todos => {
+                return localforage.getItem('login').then(login => {
+                    return fetch(SERVER_URL + '/todos/' + login, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json; charset=utf-8',
+                        },
+                        body: JSON.stringify(todos)
+                    }).then(() => {
+                        console.log('synced')
+                    }).catch(console.error)
+                })
+            })
+        )
+    }
+});
+
+// deletes old caches
+self.addEventListener('activate', function (event) {
+    const cacheWhitelist = [CACHE_NAME];
+    event.waitUntil(
+        caches.keys().then(function (cacheNames) {
+            return Promise.all(
+                cacheNames.map(function (cacheName) {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
     );
 });
