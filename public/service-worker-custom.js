@@ -5,9 +5,14 @@ const CACHE_NAME = 'todo-pwa-cache-2';
 
 self.addEventListener('install', async function () {
     const cache = await caches.open(CACHE_NAME);
-    const urlsToCache = await (await fetch('asset-manifest.json')).json();
+    const responseBody = await (await fetch('asset-manifest.json')).json();
 
-    return await cache.addAll(Object.values(urlsToCache));
+    const urlsToCache = Object.values(responseBody);
+
+    return await cache.addAll([
+        ...urlsToCache,
+        '/todo-pwa/img/feather-sprite.svg'
+    ]);
 });
 
 self.addEventListener('fetch', function (event) {
