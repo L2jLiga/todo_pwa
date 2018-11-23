@@ -2,6 +2,7 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://l2jliga.github.io/todo_pwa/",
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -9,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build docs && cp docs/index.html docs/404.html",
+    "build": "rm -Rf docs && react-scripts build && mv build docs && cp docs/index.html docs/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
