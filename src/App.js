@@ -22,11 +22,11 @@ const Header = (props) => (
         {props.login &&
         <div className="icons">
             <svg className="feather">
-                <use xlinkHref="%PUBLIC_URL%/img/feather-sprite.svg#bell-off" />
+                <use xlinkHref="/todo_pwa/img/feather-sprite.svg#bell-off" />
             </svg>
             <svg className="feather log-out" aria-label="Logout" role="button"
                  onClick={props.logOut}>
-                <use xlinkHref="%PUBLIC_URL%/img/feather-sprite.svg#log-out" />
+                <use xlinkHref="/todo_pwa/img/feather-sprite.svg#log-out" />
             </svg>
         </div>}
     </header>
@@ -41,7 +41,7 @@ class Login extends React.Component {
                     <input type="text" id="username" placeholder="Avi" />
                     <svg className="feather right-arrow login-button" aria-label="Login" role="button"
                          onClick={() => this.props.login(document.getElementById('username').value)}>
-                        <use xlinkHref="%PUBLIC_URL%/img/feather-sprite.svg#arrow-right-circle" />
+                        <use xlinkHref="/todo_pwa/img/feather-sprite.svg#arrow-right-circle" />
                     </svg>
                 </div>
             </div>
@@ -105,7 +105,7 @@ class Content extends React.Component {
                     <input type="text" id="todoText" placeholder="Enter todo..." />
                     <svg className="feather right-arrow" aria-label="Add new todo" role="button"
                          onClick={() => this.addTodo(document.getElementById('todoText').value)}>
-                        <use xlinkHref="%PUBLIC_URL%/img/feather-sprite.svg#arrow-right-circle" />
+                        <use xlinkHref="/todo_pwa/img/feather-sprite.svg#arrow-right-circle" />
                     </svg>
                 </div>
             </div>
