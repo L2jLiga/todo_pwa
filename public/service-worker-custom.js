@@ -9,7 +9,7 @@ self.addEventListener('install', function (event) {
 
                 const urlsToCache = await (await fetch('asset-manifest.json')).json();
 
-                return cache.addAll(urlsToCache);
+                return cache.addAll(Object.values(urlsToCache));
             })
     );
 });
