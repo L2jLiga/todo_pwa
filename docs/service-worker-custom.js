@@ -1,3 +1,5 @@
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js');
+
 const SERVER_URL = 'https://www.jsonstore.io/c1e61fddba68a34eb79eeb97fc56d72df86092d86ad5def5dc25a7252e6cf382';
 const CACHE_NAME = 'todo-pwa-cache-1';
 
@@ -59,8 +61,8 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('sync', function (event) {
     if (event.tag === 'sync') {
         event.waitUntil(
-            self.localforage.getItem('todos').then(todos => {
-                return self.localforage.getItem('login').then(login => {
+            localforage.getItem('todos').then(todos => {
+                return localforage.getItem('login').then(login => {
                     return fetch(SERVER_URL + '/todos/' + login, {
                         method: 'POST',
                         headers: {
