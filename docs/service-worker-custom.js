@@ -1,7 +1,7 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
-    '%PUBLIC_URL%',
-    '%PUBLIC_URL%/404.html'
+    '/todo_app/',
+    '/todo_app/404.html'
 ];
 
 self.addEventListener('install', function (event) {
