@@ -58,15 +58,6 @@ export function register(config) {
   }
 }
 
-
-var CACHE_NAME = 'my-site-cache-v1';
-var urlsToCache = [
-    '/',
-    '/styles/main.css',
-    '/script/main.js'
-];
-
-
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
@@ -77,7 +68,7 @@ function registerValidSW(swUrl, config) {
         if (installingWorker == null) {
           return;
         }
-        installingWorker.onstatechange = (event) => {
+        installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
@@ -93,15 +84,6 @@ function registerValidSW(swUrl, config) {
                 config.onUpdate(registration);
               }
             } else {
-
-                event.waitUntil(
-                    caches.open(CACHE_NAME)
-                        .then(function(cache) {
-                            console.log('Opened cache');
-                            return cache.addAll(urlsToCache);
-                        })
-                );
-
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
