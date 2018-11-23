@@ -59,8 +59,8 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('sync', function (event) {
     if (event.tag === 'sync') {
         event.waitUntil(
-            localforage.getItem('todos').then(todos => {
-                return localforage.getItem('login').then(login => {
+            self.localforage.getItem('todos').then(todos => {
+                return self.localforage.getItem('login').then(login => {
                     return fetch(SERVER_URL + '/todos/' + login, {
                         method: 'POST',
                         headers: {
