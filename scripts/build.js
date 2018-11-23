@@ -17,7 +17,8 @@ require('../config/env');
 
 const path = require('path');
 const chalk = require('chalk');
-const fs = require('fs-extra');
+const fs = require('fs');
+const fsExtra = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
 const config = require('../config/webpack.config.prod');
@@ -31,7 +32,7 @@ const printBuildError = require('react-dev-utils/printBuildError');
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
-const useYarn = fs.existsSync(paths.yarnLockFile);
+const useYarn = fsExtra.existsSync(paths.yarnLockFile);
 
 // These sizes are pretty large. We'll warn for bundles exceeding them.
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
@@ -60,7 +61,7 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
-    fs.emptyDirSync(paths.appBuild);
+    fsExtra.emptyDirSync(paths.appBuild);
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
@@ -182,8 +183,14 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
-  fs.copySync(paths.appPublic, paths.appBuild, {
+  const excluded = [paths.appHtml, paths.appSW];
+
+  fsExtra.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: file => file !== paths.appHtml,
+    filter: file => !excluded.includes(file)
   });
+
+  const appSW = fs.readFileSync(paths.appSW, {encoding: 'utf8'});
+
+  fs.writeFileSync(path.join(paths.appBuild, 'service-worker-custom.js'), appSW.toString().replace('%CACHE_NAME%', Date.now()));
 }
