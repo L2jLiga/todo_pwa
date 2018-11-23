@@ -3,18 +3,11 @@ importScripts('https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localfor
 const SERVER_URL = 'https://www.jsonstore.io/c1e61fddba68a34eb79eeb97fc56d72df86092d86ad5def5dc25a7252e6cf382';
 const CACHE_NAME = 'todo-pwa-cache-1';
 
-self.addEventListener('install', function (event) {
-    // Perform install steps
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(async function (cache) {
-                console.log('Opened cache');
+self.addEventListener('install', async function () {
+    const cache = await caches.open(CACHE_NAME);
+    const urlsToCache = await (await fetch('asset-manifest.json')).json();
 
-                const urlsToCache = await (await fetch('asset-manifest.json')).json();
-
-                return cache.addAll(Object.values(urlsToCache));
-            })
-    );
+    return await cache.addAll(Object.values(urlsToCache));
 });
 
 self.addEventListener('fetch', function (event) {
@@ -23,14 +16,7 @@ self.addEventListener('fetch', function (event) {
             .then(function (response) {
                 // handle backend requests in network first, cache second order
                 if (event.request.url.startsWith(SERVER_URL)) {
-                    return fetch(event.request).then(function (networkResponse) {
-                        caches.open(CACHE_NAME).then(function (cache) {
-                            cache.put(event.request, networkResponse);
-                        });
-                        return networkResponse.clone();
-                    }).catch(function () {
-                        return response;
-                    });
+                    return fetchTodos(event);
                 }
 
                 // Cache hit - return response
@@ -64,10 +50,25 @@ self.addEventListener('fetch', function (event) {
 
                         return response;
                     }
-                );
+                ).catch(() => {
+                });
             })
     );
 });
+
+async function fetchTodos(event) {
+    await fetch(event.request)
+        .then(response => response.json())
+        .then(response => response.result)
+        .then(todos => localforage.setItem('todos', todos))
+        .catch(() => {});
+
+    const result = await localforage.getItem('todos') || [];
+
+    const body = JSON.stringify({result});
+
+    return new Response(await body);
+}
 
 // background sync
 self.addEventListener('sync', function (event) {

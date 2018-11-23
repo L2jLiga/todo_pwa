@@ -65,10 +65,15 @@ class Content extends React.Component {
         this.fetchTodos();
     }
 
+    componentWillUnmount() {
+
+    }
+
     fetchTodos() {
-        fetch(SERVER_URL + '/todos/' + this.props.login).then(res => res.json()).then(obj => {
-            this.setState({todos: obj.result || []});
-        });
+        fetch(SERVER_URL + '/todos/' + this.props.login)
+            .then(response => response.json())
+            .then(body => body.result || [])
+            .then((todos) => this.setState({todos}));
     }
 
     getLatestTodos() {
@@ -77,34 +82,37 @@ class Content extends React.Component {
         });
     }
 
-    addTodo(text) {
-        this.getLatestTodos().then(todos => {
-            this.postTodos([...todos, {title: text, completed: false, id: todos.length + 1}]);
-        });
+    async addTodo(text) {
+        const todos = await this.getLatestTodos();
+
+        await this.postTodos([...todos, {title: text, completed: false, id: todos.length + 1}]);
+
         document.getElementById('todoText').value = '';
     }
 
-    postTodos(todos) {
-        localforage.setItem('todos', todos).then(() => {
-            navigator.serviceWorker.ready.then(swRegistration => {
-                return swRegistration.sync.register('sync');
-            });
-        }).catch(console.error);
+    async postTodos(todos) {
+        await localforage.setItem('todos', todos);
+
+        const swRegistration = await navigator.serviceWorker.ready;
+
+        await swRegistration.sync.register('sync');
+
         // allow UI change
         // better way use messages http://craig-russell.co.uk/2016/01/29/service-worker-messaging.html
         this.setState({todos});
     }
 
-    toggleTodo(todoID) {
-        this.getLatestTodos().then(todos => {
-            let newTodos = todos.map(todo => {
-                if (todo.id === todoID) {
-                    todo.completed = !todo.completed;
-                }
-                return todo;
-            });
-            this.postTodos(newTodos);
+    async toggleTodo(todoID) {
+        const todos = await this.getLatestTodos();
+
+        const newTodos = todos.map(todo => {
+            if (todo.id === todoID) {
+                todo.completed = !todo.completed;
+            }
+            return todo;
         });
+
+        this.postTodos(newTodos);
     }
 
     render() {
