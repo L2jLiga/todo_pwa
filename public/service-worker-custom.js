@@ -17,10 +17,22 @@ self.addEventListener('install', function (event) {
     );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
-            .then(function(response) {
+            .then(function (response) {
+                // handle backend requests in network first, cache second order
+                if (event.request.url.startsWith(SERVER_URL)) {
+                    return fetch(event.request).then(function (networkResponse) {
+                        caches.open(CACHE_NAME).then(function (cache) {
+                            cache.put(event.request, networkResponse);
+                        });
+                        return networkResponse.clone();
+                    }).catch(function () {
+                        return response;
+                    });
+                }
+
                 // Cache hit - return response
                 if (response) {
                     return response;
@@ -33,9 +45,9 @@ self.addEventListener('fetch', function(event) {
                 var fetchRequest = event.request.clone();
 
                 return fetch(fetchRequest).then(
-                    function(response) {
+                    function (response) {
                         // Check if we received a valid response
-                        if(!response || response.status !== 200 || response.type !== 'basic') {
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
                             return response;
                         }
 
@@ -46,7 +58,7 @@ self.addEventListener('fetch', function(event) {
                         var responseToCache = response.clone();
 
                         caches.open(CACHE_NAME)
-                            .then(function(cache) {
+                            .then(function (cache) {
                                 cache.put(event.request, responseToCache);
                             });
 
@@ -66,15 +78,15 @@ self.addEventListener('sync', function (event) {
                     return fetch(SERVER_URL + '/todos/' + login, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json; charset=utf-8',
+                            'Content-Type': 'application/json; charset=utf-8'
                         },
                         body: JSON.stringify(todos)
                     }).then(() => {
-                        console.log('synced')
-                    }).catch(console.error)
-                })
+                        console.log('synced');
+                    }).catch(console.error);
+                });
             })
-        )
+        );
     }
 });
 
