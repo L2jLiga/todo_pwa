@@ -1,12 +1,4 @@
-var CACHE_NAME = 'my-site-cache-v1';
-var urlsToCache = [
-    '/todo_pwa/',
-    '/todo_pwa/404.html',
-    '/todo_pwa/static/css/main.chunk.css',
-    '/todo_pwa/static/js/1.chunk.js',
-    '/todo_pwa/static/js/main.chunk.js',
-    '/todo_pwa/static/js/runtime~main.js'
-];
+var CACHE_NAME = 'todo-pwa-cache-1';
 
 self.addEventListener('install', function (event) {
     // Perform install steps
@@ -15,9 +7,9 @@ self.addEventListener('install', function (event) {
             .then(async function (cache) {
                 console.log('Opened cache');
 
-                const urlsToChache = await fetch('./asset-manifest.json');
+                const urlsToCache = await (await fetch('asset-manifest.json')).json();
 
-                return cache.addAll(urlsToCache.json());
+                return cache.addAll(urlsToCache);
             })
     );
 });
