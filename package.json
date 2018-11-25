@@ -61,7 +61,14 @@
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "localforage": true,
+      "importScripts": true
+    },
+    "rules": {
+      "no-restricted-globals": "off"
+    }
   },
   "browserslist": [
     ">0.2%",
@@ -114,8 +121,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "devDependencies": {
-    "@types/node": "^10.12.10"
   }
 }

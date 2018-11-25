@@ -1,0 +1,28 @@
+
+.labelFinished {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    padding-left: 0.5rem;
+}
+
+.todoItems {
+    margin-bottom: 50px;
+}
+
+/* footer new todo */
+.newTodo {
+    position: fixed;
+    background: white;
+    bottom: 0;
+    border: 1px solid #bbb;
+    width: calc(100% - 2rem);
+    max-width: calc(800px - 2rem);
+    display: flex;
+    padding: 0.5rem 1rem;
+}
+
+#todoText {
+    font-size: 1rem;
+    flex-grow: 100;
+    border: 0;
+}

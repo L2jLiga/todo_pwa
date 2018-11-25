@@ -1,0 +1,22 @@
+
+.todo {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.todoCheck {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.todoText {
+    margin-left: 1rem;
+}
+
+.todoChecked {
+    text-decoration: line-through;
+    font-style: italic;
+    opacity: 0.54;
+}

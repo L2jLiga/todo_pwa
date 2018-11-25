@@ -1,15 +1,15 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -24,17 +24,12 @@ html, body {
     font-size: calc(18px * 1.1);
 }
 
-h1,h2 {
+h1, h2 {
     font-weight: normal;
-}
-
-div#root {
-    height: 100%;
 }
 
 .app {
     background-color: white;
-    height: 100%;
 }
 
 /* HEADER */
@@ -107,61 +102,20 @@ header {
 }
 
 /* BODY */
+.content-wrapper {
+    position: relative;
+    height: calc(100vh - 3rem);
+    overflow: auto;
+}
+
 .content {
     margin: 0 auto;
-    /* padding: 0; */
     max-width: 800px;
-}
-
-.todo {
-    padding: 0.5rem;
-    /* font-size: 1.5rem; */
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid lightgray;
-}
-
-.todoCheck {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.todoText {
-    margin-left: 1rem;
-}
-
-.todoChecked {
-    text-decoration: line-through;
-    font-style: italic;
-    opacity: 0.54;
-}
-
-.labelFinished {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    padding-left: 0.5rem;
-}
-
-/* footer new todo */
-.newTodo {
-    position: fixed;
-    bottom: 0;
-    border: 1px solid #bbb;
-    width: calc(100% - 2rem);
-    max-width: calc(800px - 2rem);
-    display: flex;
-    padding: 0.5rem 1rem;
 }
 
 .right-arrow {
     color: black;
     opacity: 0.87;
-}
-
-#todoText {
-    font-size: 1rem;
-    flex-grow: 100;
-    border: 0;
 }
 
 input:focus {
