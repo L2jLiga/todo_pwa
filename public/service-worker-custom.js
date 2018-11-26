@@ -5,7 +5,7 @@ const CACHE_NAME = '%CACHE_NAME%';
 
 class Storage {
     static get todos() {
-        return localforage.getItem('todos').then(todos => todos || []);
+        return localforage.getItem('todos').then(todos => Array.isArray(todos) ? todos : []);
     }
 
     static set todos(todos) {
@@ -25,7 +25,7 @@ self.addEventListener('install', async function () {
 
     return await cache.addAll([
         ...urlsToCache,
-        '/todo-pwa/img/feather-sprite.svg'
+        '/todo_pwa/img/feather-sprite.svg'
     ]);
 });
 
@@ -79,6 +79,7 @@ async function fetchTodos(event) {
     await fetch(event.request)
         .then(response => response.json())
         .then(response => response.result)
+        .then(todos => Array.isArray(todos) ? todos : [])
         .then(todos => Storage.todos = todos)
         .catch(() => {});
 
@@ -101,8 +102,6 @@ self.addEventListener('sync', function (event) {
                             'Content-Type': 'application/json; charset=utf-8'
                         },
                         body: JSON.stringify(todos)
-                    }).then(() => {
-                        console.log('synced');
                     }).catch(console.error);
                 });
             })
