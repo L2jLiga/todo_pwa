@@ -67,6 +67,19 @@ export class Content extends Component {
         this.postTodos(newTodos);
     }
 
+    async updateTodo(todoID, text) {
+        const todos = await this.getLatestTodos();
+
+        const newTodos = todos.map(todo => {
+            if (todo.id === todoID) {
+                todo.title = text;
+            }
+            return todo;
+        });
+
+        this.postTodos(newTodos);
+    }
+
     render() {
         return (
             <div className='content-wrapper'>
@@ -75,6 +88,7 @@ export class Content extends Component {
                         {this.state.todos.filter(t => !t.completed).map(todo => <TodoItem key={todo.id}
                                                                                           todo={todo}
                                                                                           toggle={this.toggleTodo.bind(this)}
+                                                                                          update={this.updateTodo.bind(this)}
                                                                                           remove={this.removeTodo.bind(this)}/>)}
                     </div>
                     <h2 className="labelFinished">Finished</h2>
@@ -82,6 +96,7 @@ export class Content extends Component {
                         {this.state.todos.filter(t => t.completed).map(todo => <TodoItem key={todo.id}
                                                                                          todo={todo}
                                                                                          toggle={this.toggleTodo.bind(this)}
+                                                                                         update={this.updateTodo.bind(this)}
                                                                                          remove={this.removeTodo.bind(this)}/>)}
                     </div>
                     <div className="newTodo">
