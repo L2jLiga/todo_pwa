@@ -1,8 +1,8 @@
 import localforage from 'localforage';
 import React, { Component } from 'react';
 import { SERVER_URL } from '../registry';
-import { TodoItem } from './Todo-item';
 import './Content.css';
+import { TodoItem } from './Todo-item';
 
 export class Content extends Component {
     state = {todos: []};
@@ -34,6 +34,12 @@ export class Content extends Component {
         await this.postTodos([...todos, {title: text, completed: false, id: todos.length + 1}]);
 
         document.getElementById('todoText').value = '';
+    }
+
+    async removeTodo(todoId) {
+        const todos = await this.getLatestTodos();
+
+        await this.postTodos(todos.filter(({id}) => id !== todoId));
     }
 
     async postTodos(todos) {
@@ -68,13 +74,15 @@ export class Content extends Component {
                     <div className="todoItems">
                         {this.state.todos.filter(t => !t.completed).map(todo => <TodoItem key={todo.id}
                                                                                           todo={todo}
-                                                                                          toggle={this.toggleTodo.bind(this)}/>)}
+                                                                                          toggle={this.toggleTodo.bind(this)}
+                                                                                          remove={this.removeTodo.bind(this)}/>)}
                     </div>
                     <h2 className="labelFinished">Finished</h2>
                     <div className="todoItems">
                         {this.state.todos.filter(t => t.completed).map(todo => <TodoItem key={todo.id}
                                                                                          todo={todo}
-                                                                                         toggle={this.toggleTodo.bind(this)}/>)}
+                                                                                         toggle={this.toggleTodo.bind(this)}
+                                                                                         remove={this.removeTodo.bind(this)}/>)}
                     </div>
                     <div className="newTodo">
                         <input type="text"

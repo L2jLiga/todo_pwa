@@ -12,6 +12,9 @@ export class TodoItem extends Component {
                 <span className={['todoText', this.props.todo.completed ? 'todoChecked' : ''].join(' ')}>
 					{this.props.todo.title}
 				</span>
+                <span className="todoDelete" onClick={() => this.props.remove(this.props.todo.id)}>
+                    Delete
+                </span>
             </div>
         );
     }
