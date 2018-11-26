@@ -8,6 +8,6 @@
   "runtime~main.js.map": "/todo_pwa/static/js/runtime~main.js.map",
   "static/css/main.chunk.css.map": "/todo_pwa/static/css/main.chunk.css.map",
   "index.html": "/todo_pwa/index.html",
-  "precache-manifest.3f05913911f87f8a1080e1693283996a.js": "/todo_pwa/precache-manifest.3f05913911f87f8a1080e1693283996a.js",
+  "precache-manifest.cab3fd7f31f80004a4342f9684246900.js": "/todo_pwa/precache-manifest.cab3fd7f31f80004a4342f9684246900.js",
   "service-worker.js": "/todo_pwa/service-worker.js"
 }

@@ -1,11 +1,11 @@
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js');
 
 const SERVER_URL = 'https://www.jsonstore.io/c1e61fddba68a34eb79eeb97fc56d72df86092d86ad5def5dc25a7252e6cf382';
-const CACHE_NAME = '1543111302968';
+const CACHE_NAME = '1543211086598';
 
 class Storage {
     static get todos() {
-        return localforage.getItem('todos').then(todos => todos || []);
+        return localforage.getItem('todos').then(todos => Array.isArray(todos) ? todos : []);
     }
 
     static set todos(todos) {
@@ -25,7 +25,7 @@ self.addEventListener('install', async function () {
 
     return await cache.addAll([
         ...urlsToCache,
-        '/todo-pwa/img/feather-sprite.svg'
+        '/todo_pwa/img/feather-sprite.svg'
     ]);
 });
 
@@ -79,6 +79,7 @@ async function fetchTodos(event) {
     await fetch(event.request)
         .then(response => response.json())
         .then(response => response.result)
+        .then(todos => Array.isArray(todos) ? todos : [])
         .then(todos => Storage.todos = todos)
         .catch(() => {});
 
@@ -101,8 +102,6 @@ self.addEventListener('sync', function (event) {
                             'Content-Type': 'application/json; charset=utf-8'
                         },
                         body: JSON.stringify(todos)
-                    }).then(() => {
-                        console.log('synced');
                     }).catch(console.error);
                 });
             })
