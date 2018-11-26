@@ -4,15 +4,15 @@ self.__precacheManifest = [
     "url": "/todo_pwa/static/js/runtime~main.js"
   },
   {
-    "revision": "112e14b4137757cc2dce",
+    "revision": "47391d5000c32616fc08",
     "url": "/todo_pwa/static/js/main.chunk.js"
   },
   {
-    "revision": "74bb3e050874ec92c26a",
+    "revision": "f8cec7a68512fcb9c9f6",
     "url": "/todo_pwa/static/js/1.chunk.js"
   },
   {
-    "revision": "112e14b4137757cc2dce",
+    "revision": "47391d5000c32616fc08",
     "url": "/todo_pwa/static/css/main.chunk.css"
   },
   {
