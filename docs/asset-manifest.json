@@ -2,12 +2,12 @@
   "main.css": "/todo_pwa/static/css/main.chunk.css",
   "main.js": "/todo_pwa/static/js/main.chunk.js",
   "main.js.map": "/todo_pwa/static/js/main.chunk.js.map",
-  "static/js/1.chunk.js": "/todo_pwa/static/js/1.chunk.js",
-  "static/js/1.chunk.js.map": "/todo_pwa/static/js/1.chunk.js.map",
   "runtime~main.js": "/todo_pwa/static/js/runtime~main.js",
   "runtime~main.js.map": "/todo_pwa/static/js/runtime~main.js.map",
-  "static/css/main.chunk.css.map": "/todo_pwa/static/css/main.chunk.css.map",
+  "static/js/2.chunk.js": "/todo_pwa/static/js/2.chunk.js",
+  "static/js/2.chunk.js.map": "/todo_pwa/static/js/2.chunk.js.map",
   "index.html": "/todo_pwa/index.html",
-  "precache-manifest.98ab610f526d392ab39bbe1212b65f93.js": "/todo_pwa/precache-manifest.98ab610f526d392ab39bbe1212b65f93.js",
-  "service-worker.js": "/todo_pwa/service-worker.js"
+  "precache-manifest.dbd325becea8c404d111d5b2aa9ddfb8.js": "/todo_pwa/precache-manifest.dbd325becea8c404d111d5b2aa9ddfb8.js",
+  "service-worker.js": "/todo_pwa/service-worker.js",
+  "static/css/main.chunk.css.map": "/todo_pwa/static/css/main.chunk.css.map"
 }
